@@ -1,9 +1,9 @@
 var _ = require("underscore");
 
-var AllValuesSame = function( arr ){
-    if (arr.length > 0) {
-        for (var i = 1; i < arr.length; i++){
-            if (arr[i] !== arr[0]){
+Array.prototype.AllValuesSame = function(){
+    if (this.length > 0) {
+        for (var i = 1; i < this.length; i++){
+            if (this[i] !== this[0]){
                 return false;
             }
         }
@@ -65,7 +65,7 @@ var MaxGain = function(data, features, y, num_tries){
     gains.push(Gain(data, features[i], y, num_tries));
   }
 
-  if ( AllValuesSame(_.pluck(gains, 'gain')) ){
+  if (_.pluck(gains, 'gain').AllValuesSame){
     return gains[RandomInt(0, gains.length)];
   } else {
     return _.max(gains,function(e){
@@ -113,7 +113,7 @@ var RID = function(){
 };
 
 var GetType = function(input) {
-    var m = (/^[\d]+(\.[\d]+)?$/).exec(input);
+    var m = (/[\d]+(\.[\d]+)?/).exec(input);
     if (m) {
        // Check if there is a decimal place
         if (m[1]) {
@@ -351,4 +351,3 @@ module.exports.GetType = GetType;
 module.exports.GetDominate = GetDominate;
 module.exports.Average = Average;
 module.exports.d3ifyModel = d3ifyModel;
-module.exports.AllValuesSame = AllValuesSame;

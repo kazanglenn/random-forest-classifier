@@ -71,7 +71,6 @@ DecisionTreeClassifier.prototype = {
 
         while (root.type !== "result") {
             var attr = root.name;
-            var child_node;
             if (root.type === 'feature_real') {
                 var sample_value = parseFloat(sample[attr]);
                 if (sample_value <= root.cut){
@@ -81,14 +80,11 @@ DecisionTreeClassifier.prototype = {
                 }
             } else {
                 var sample_value = sample[attr];
-                child_node = _.detect(root.vals, function(x) {
+                var child_node = _.detect(root.vals, function(x) {
                     return x.name == sample_value;
                 });
             }
-            if (child_node) {
-               root = child_node.child;
-            }
-            break;
+            root = child_node.child;
         }
 
         return root.val;
